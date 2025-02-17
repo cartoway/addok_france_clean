@@ -11,3 +11,4 @@ else:
 
 
 clean_query = yielder(utils.clean_query)
+multi_token_synonymize = utils.multi_token_synonymize
