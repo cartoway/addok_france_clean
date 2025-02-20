@@ -3,6 +3,9 @@ from addok.helpers.text import Token
 
 def clean_query(q):
   q = str(q) # Hack, why I need this ?
+  q = q.strip()
+  q = re.sub('-', ' ', q)
+  q = re.sub('\s+', ' ', q)
   q = re.sub(r'\bb\.? ?p\.? ?[\d]*', '', q, flags=re.IGNORECASE) # Orverload
   q = re.sub(r'\bc\.? ?s\.? ?[\d]*', '', q, flags=re.IGNORECASE) # Orverload
   q = re.sub(r'\blieu[ -]?dit', '', q, flags=re.IGNORECASE)
@@ -13,6 +16,8 @@ def clean_query(q):
   q = re.sub(r'\b([eé]tage) ?[0-9]{1,2}', '', q, flags=re.IGNORECASE)
   q = re.sub(r'\bN[o°](?=[ 0-9])', '', q, flags=re.IGNORECASE)
   q = re.sub('\(.*?\)', '', q, flags=re.IGNORECASE)
+  if not re.search(r'(baillet\sen|belloy\sen|bonneuil\sen|ch[âa]tenay\sen|fort\sde|la chapelle\sdu\smont\sde|latour\sde|mareil\sen|puiseux\sen|roissy\sen|tremblay\sen)\sfrance$', q, flags=re.IGNORECASE):
+    q = re.sub(r'\bfrance$', '', q, flags=re.IGNORECASE)
   return q
 
 GENERAL_CHARLES_DE_GAULLE = ('général', 'charles', 'de', 'gaulle')
